@@ -4,11 +4,11 @@
 name: Deploy main branch as website
 
 on:
-Keep deployment manual, matching the existing course workflow.
-To deploy on every push as in the Drafter v2 extension guide, also add:
+  #  Keep deployment manual, matching the existing course workflow.
+  #  To deploy on every push as in the Drafter v2 extension guide, also add:
 push:
     branches: ["main"]
-  workflow_dispatch:
+workflow_dispatch:
 
 permissions:
   contents: read
