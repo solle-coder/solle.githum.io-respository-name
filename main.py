@@ -4,6 +4,18 @@ from dataclasses import dataclass
 import math
 import matplotlib.pyplot as plt
 
+set_website_title("Calculator")
+set_site_information(
+    author="Sanmi Olle",
+    description="Complete basic equations and expand beyond it.",
+    sources="Thanks to the Drafter docs and years of experience from friends and instructors",
+    planning=["plan.pdf", "design.pdf"],
+    links=["https://github.com/solle-coder/solle.githum.io-respository-name"]
+)
+
+hide_debug_information()
+set_website_framed(False)
+
 @dataclass
 class Calculation:
     expression: str
@@ -57,15 +69,20 @@ def arithmetic_calculation(num1: float, num2: float, operation: str) -> str:
         return str(num1 * num2)
     elif operation == "/":
         if num2 == 0:
-            return "Error: Cannot divide by zero!"
+            return "Math Error: Cannot divide by zero!"
         return str(num1 / num2)
+    elif operation == "^":
+        return str(num1 ** num2)
+    elif operation == "!":
+        return str(num1 * arithmetic_calculation(num1 - 1))
     return "Invalid Operation"
     
 assert_equal(arithmetic_calculation(2.0, 3.5, "+"), "5.5")
 assert_equal(arithmetic_calculation(5.0, 3.0, "-"), "2.0")
 assert_equal(arithmetic_calculation(12.0, 3.0, "*"), "36.0")
 assert_equal(arithmetic_calculation(6.0, 3.0, "/"), "2.0")
-assert_equal(arithmetic_calculation(4.0, 0.0, "/"), "Error: Cannot divide by zero!")
+assert_equal(arithmetic_calculation(2.0, 3.0, "^"), "8.0")
+assert_equal(arithmetic_calculation(4.0, 0.0, "/"), "Math Error: Cannot divide by zero!")
 
 @route
 def arithmetic(state: State) -> Page:
@@ -78,7 +95,7 @@ def arithmetic(state: State) -> Page:
         "Enter second number",
         TextBox("number2"),
         "Choose an Operator",
-        SelectBox("operation", ["+", "-", "*", "/"]),
+        SelectBox("operation", ["+", "-", "*", "/", "^", "!"]),
         Button("Calculate", calculate_arithmetic),
         "Result: " + str(state.last_answer),
         Button("Home", index)
@@ -95,7 +112,7 @@ def calculate_arithmetic(state: State, number1: str, number2: str, operation: st
     There is more stuff to add at a later date
     """
     if operation == "/" and second == 0.0:
-        return Page(state, ["Error: Cannot divide by zero!", Button("Back", arithmetic)])
+        return Page(state, ["Math Error: Cannot divide by zero!", Button("Back", arithmetic)])
     answer = arithmetic_calculation(first, second, operation)
     state.last_answer = answer
     
@@ -288,6 +305,8 @@ def format_equation(equation_type: str, a: float, b: float, c: float) -> str:
 assert_equal(format_equation("Linear", 2.0, 3.0, 0.0), "y = 2.0x + 3.0")
 assert_equal(format_equation("Quadratic", 1.0, -2.0, 5.0), "y = 1.0x^2 + -2.0x + 5.0")
 
+def de
+
 def build_plot(x_values: list[float], y_values: list[float], title: str, settings: Settings):
     fig, axes = plt.subplots()
     axes.plot(x_values, y_values, color=settings.line_color, marker="o")
@@ -366,4 +385,3 @@ start_server(
         last_answer = 0
     )   
 )
-
