@@ -305,8 +305,6 @@ def format_equation(equation_type: str, a: float, b: float, c: float) -> str:
 assert_equal(format_equation("Linear", 2.0, 3.0, 0.0), "y = 2.0x + 3.0")
 assert_equal(format_equation("Quadratic", 1.0, -2.0, 5.0), "y = 1.0x^2 + -2.0x + 5.0")
 
-def de
-
 def build_plot(x_values: list[float], y_values: list[float], title: str, settings: Settings):
     fig, axes = plt.subplots()
     axes.plot(x_values, y_values, color=settings.line_color, marker="o")
