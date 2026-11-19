@@ -2,7 +2,7 @@ from bakery import assert_equal
 from drafter import *
 from dataclasses import dataclass
 import math
-import matplotlib.pyplot as plt
+from matplotlib import pyplot
 
 set_website_title("Calculator")
 set_site_information(
@@ -73,8 +73,6 @@ def arithmetic_calculation(num1: float, num2: float, operation: str) -> str:
         return str(num1 / num2)
     elif operation == "^":
         return str(num1 ** num2)
-    elif operation == "!":
-        return str(num1 * arithmetic_calculation(num1 - 1))
     return "Invalid Operation"
     
 assert_equal(arithmetic_calculation(2.0, 3.5, "+"), "5.5")
@@ -95,7 +93,7 @@ def arithmetic(state: State) -> Page:
         "Enter second number",
         TextBox("number2"),
         "Choose an Operator",
-        SelectBox("operation", ["+", "-", "*", "/", "^", "!"]),
+        SelectBox("operation", ["+", "-", "*", "/", "^"]),
         Button("Calculate", calculate_arithmetic),
         "Result: " + str(state.last_answer),
         Button("Home", index)
@@ -306,7 +304,7 @@ assert_equal(format_equation("Linear", 2.0, 3.0, 0.0), "y = 2.0x + 3.0")
 assert_equal(format_equation("Quadratic", 1.0, -2.0, 5.0), "y = 1.0x^2 + -2.0x + 5.0")
 
 def build_plot(x_values: list[float], y_values: list[float], title: str, settings: Settings):
-    fig, axes = plt.subplots()
+    fig, axes = pyplot.subplots()
     axes.plot(x_values, y_values, color=settings.line_color, marker="o")
     axes.axhline(0, color="black", linewidth=0.8)
     axes.axvline(0, color="black", linewidth=0.8)
